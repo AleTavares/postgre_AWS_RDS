@@ -1,11 +1,19 @@
-resource "aws_secretsmanager_secret_version" "postgres_db" {
+resource "aws_secretsmanager_secret" "postgres_db" {
+  name                    = var.secret_name
+  recovery_window_in_days = 0
+}
+
+resource "random_password" "db_admin_password" {
+  length  = 16
+  special = false
+}
+
+resource "aws_secretsmanager_secret_version" "postgres_db_secret" {
   secret_id     = aws_secretsmanager_secret.postgres_db.id
   secret_string = <<EOT
 {
-  "master_username": "${var.db_username}",
-  "master_password": "${random_password.db_master_password.result}",
-  "read_only_username": "${var.db_username}_db",
-  "read_only_password": "${random_password.db_read_only_password.result}",
+  "admin_username": "${var.db_username}",
+  "admin_password": "${random_password.db_admin_password.result}"
 }
 EOT
 }

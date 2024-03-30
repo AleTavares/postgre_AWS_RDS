@@ -3,10 +3,47 @@ A idéia deste projeto é criar uma Instancia de RDS (Relational Database Servic
 
 Está ideia sugiu depois de muitas pessoas me procurarem perguntando como elas fazem para estudar ETL e simular a estração de dados.
 
-Vamos subir uma Instancia de AWS RDS via terraform com toda a egurança e com um usuario restrito e usando o Secretmanager para simular uma instancia de banco de dados real.
+Vamos subir uma Instancia de AWS RDS via terraform com um usuario restrito e usando o Secretmanager para simular uma instancia de banco de dados real.
 
 # Pré requisitos
 - Uma conta AWS com permissões apropriadas para criar recursos como instâncias Ec2, instâncias RDS e acesso Terraform.
 - Terraform instalado em sua máquina local.
 - Conhecimento básico de PostgreSQL e AWS RDS.
 
+# Utilizando o Repo
+**Crie um Arquivo chamado terraform.tfvars e inclua os códigos abaixo colocando valores para as variaveis**
+```terraform
+# Variaveis Utilizadas no Secret Manager
+secret_name = "RDAccess" 
+db_username = "dbPostgres"
+
+# Variaveis Utilizadas na Instancia do RDS
+allocated_storage    = 20
+storage_type         = "gp2"
+instance_class       = "db.t3.micro"
+identifier           = "db-erp"
+engine               = "postgres"
+engine_version       = "14.7"
+parameter_group_name = "default.postgres14"
+db_name              = "northwind"
+rds-security-group   = "postgres-erp"
+```
+```bash
+terraform ini
+```
+Para inicializar o ambiente do terraform
+
+```bash
+terraform plan -out plan.out
+```
+Para Gerar o plano de execução
+
+```bash
+terraform apply plan.out
+```
+Para aplicar o plano de execução na AWS
+
+> [!NOTE]
+> Crie as chaves de acesso da AWS e coloque nas variaveis de ambiente:
+> - AWS_ACCESS_KEY_ID 
+> - AWS_SECRET_ACCESS_KEY
