@@ -47,3 +47,9 @@ Para aplicar o plano de execução na AWS
 > Crie as chaves de acesso da AWS e coloque nas variaveis de ambiente:
 > - AWS_ACCESS_KEY_ID 
 > - AWS_SECRET_ACCESS_KEY
+
+
+> [!NOTE]
+> Para simular uma base de dados de origem será necessário importar o arquivo northwind.sql que está na pasta scripts para a base de dados criada.
+> Pensei em automatizar esta tarefa, mas cheguei a conclusão de que vou deixar esta etapa para vocês.
+> Aceitarei os PR de quem resolver o desafio.
